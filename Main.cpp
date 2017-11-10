@@ -1,11 +1,27 @@
-#include <SFML\graphics.hpp>
+//Standard C++ Libraries
+#include <math.h>
+#include <algorithm>>
+#include <thread>
+#include <string>
+#include <cstdio>
+
+
+//SFML libraries
+#include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
+#include <SFML\System.hpp>
+#include <SFML/Window.hpp>
+
 
 int main()
 {
 	//Creates game window
 	sf::RenderWindow window(sf::VideoMode(800, 800), "Cookie Clicker");
 
-	//Creates a "shape" object in the variable shape and makes it green
+	//Allow window to be resized, has a maximize and close button, and has a title-bar
+	sf::Style::Default;
+
+	//Creates a "CircleShape" object in the variable "shape" and make it green
 	sf::CircleShape shape(400.f);
     shape.setFillColor(sf::Color::Green);
 
@@ -13,23 +29,26 @@ int main()
 	while (window.isOpen())
 	{
 		//Polls all input events per frame
-		sf::Event Event;
-		while (window.pollEvent(Event))
+		sf::Event event;
+		while (window.pollEvent(event))
 		{
 			//Searches for event type and applicable actions
-			switch(Event.type)
+			switch(event.type)
 			{
 				//Closes window
 				case sf::Event::Closed:
 					window.close();
 					break;
 			}
+
 		}
 
 		//Reset the window
 		window.clear();
+
 		//Draw the "shape" we created (the circle)
 		window.draw(shape);
+
 		//Update the display on the screen
 		window.display();
 	}
