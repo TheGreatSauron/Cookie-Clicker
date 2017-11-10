@@ -18,17 +18,18 @@ int main()
 	//Creates game window
 	sf::RenderWindow window(sf::VideoMode(800, 800), "Cookie Clicker");
 
-	//Allow window to be resized, has a maximize and close button, and has a title-bar
+ //Allow window to be resized, has a maximize and close button, and has a title-bar
 	sf::Style::Default;
 
 	//Creates a "CircleShape" object in the variable "shape" and make it green
 	sf::CircleShape shape(400.f);
-    shape.setFillColor(sf::Color::Green);
+  shape.setFillColor(sf::Color::Green);
 
 	//Application runs until window is closed
 	while (window.isOpen())
 	{
 		//Polls all input events per frame
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -40,12 +41,9 @@ int main()
 					window.close();
 					break;
 			}
-
 		}
-
 		//Reset the window
 		window.clear();
-
 		//Draw the "shape" we created (the circle)
 		window.draw(shape);
 
