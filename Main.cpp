@@ -34,7 +34,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600, 32), "Cookie Clicker");
 
 
-<<<<<<< HEAD
 	// **************NOT YET IMPLIMENTED*************
 	// Create our own view (basically allows for resizing of window to only be perspective based)
 	// Ensuring that window resizing will not affect the actual graphics, just the users perception of them
@@ -57,20 +56,11 @@ int main()
 
 	//set circle's center point to (0, 0)
 	cookie.setOrigin(0.f, 0.f);
-=======
- //Allow window to be resized, has a maximize and close button, and has a title-bar
-	sf::Style::Default;
-
-	//Creates a "CircleShape" object in the variable "shape" and make it green
-	sf::CircleShape shape(400.f);
-  shape.setFillColor(sf::Color::Green);
->>>>>>> 9c53ea1e911e290dd1c345219261ccc7927b4c43
 
 	//Application runs until window is closed
 	while (window.isOpen())
 	{
 		//Polls all input events per frame
-
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -82,10 +72,11 @@ int main()
 					window.close();
 					break;
 			}
+
 		}
-<<<<<<< HEAD
 
 		//get window's current width and height
+
 
 		//set the cookies position (just a bit higher than the center of screen) and use window.getSize to get the x and y of window
 		//and getRadius to offset where it starts (point 200,200 because thats its radius)
@@ -107,12 +98,6 @@ int main()
 
 		//SETS THE VEIW TO OUR UNIMPLIMENTED "ourVeiw"
 		//window.setView(ourView);
-=======
-		//Reset the window
-		window.clear();
-		//Draw the "shape" we created (the circle)
-		window.draw(shape);
->>>>>>> 9c53ea1e911e290dd1c345219261ccc7927b4c43
 
 		window.display();
 	}
