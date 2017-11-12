@@ -45,7 +45,7 @@ int main()
 
 	//Creates a "CircleShape" object in the variable "cookie"
 	sf::CircleShape cookie(200.f, 180);
-    sf::Texture cookieTxt;
+	sf::Texture cookieTxt;
 
     //get the cookie's texture and apply it to the circle
     if (!cookieTxt.loadFromFile("resources/img/cookie.png"))
