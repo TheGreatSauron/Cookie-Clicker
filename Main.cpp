@@ -65,7 +65,6 @@ int main()
     // and getRadius to offset where it starts (point 200,200 because thats its radius)
     // need to add check to ensure that if the window dimensions are too small the cookie doesn't leave the screen accidentally
     cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
-    int i = 0;
 
 	//Application runs until window is closed
 	while (window.isOpen())
