@@ -11,22 +11,9 @@
 //SFML libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
 
-
-//enable the "to_string" function of std:: as code-blocks has bugs with it not working correctly
-template <typename T>
-std::string to_string(T value){
-      //create an output string stream
-      std::ostringstream os ;
-      //throw the value into the string stream
-      os << value ;
-      //convert the string stream into a string and return
-      return os.str() ;
-}
-
+//Our headers
+#include "TextDisplay.h"
 
 int main()
 {
@@ -66,6 +53,19 @@ int main()
     // need to add check to ensure that if the window dimensions are too small the cookie doesn't leave the screen accidentally
     cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
 
+    //Create arial font
+    sf::Font Arial;
+    if (!Arial.loadFromFile("resources/font/arial.ttf"))
+    {
+        return EXIT_FAILURE;
+    }
+
+    //Debugging tool, delete later
+    int cookies = 0;
+
+    //Create TextDisplay for the number of cookies
+    TextDisplay CookieDisplay(Arial, sf::Vector2f(0, 0), cookies);
+
 	//Application runs until window is closed
 	while (window.isOpen())
 	{
@@ -84,9 +84,7 @@ int main()
 
 		}
 
-		//debug for cookie position & origin
-		std::cout << cookie.getPosition().x << " " << cookie.getRadius()<< "   ";
-		std::cout << cookie.getOrigin().x << " " << cookie.getScale().x << " " << cookie.getScale().y << "\n";
+        CookieDisplay.Update(sf::seconds(0));
 
 		//Reset the window
 		window.clear();
@@ -95,7 +93,8 @@ int main()
         window.setView(ourView);
 		//Draw the "cookie" we created onto the new veiwport
 		window.draw(cookie);
-
+		//Draw the TextDisplay for the cookie number
+        window.draw(CookieDisplay);
 
 		//Update the display on the screen using ourVeiw
 		window.display();
