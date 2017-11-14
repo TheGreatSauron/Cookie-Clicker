@@ -1,7 +1,7 @@
 //Standard C++ Libraries
 #include <iostream>
 #include <math.h>
-#include <algorithm>>
+#include <algorithm>
 #include <thread>
 #include <string>
 #include <cstdio>
@@ -27,6 +27,16 @@ std::string to_string(T value){
       return os.str() ;
 }
 
+void clickDetect(sf::Event event, sf::CircleShape shape, float Xsize, float Ysize) {
+		//preforms pythagorean therum on the point you choose and see if its inside it or not, it is also offset by the cookies position (y / 3 and x / 2)
+		float pythagorean = sqrt((pow(event.mouseButton.x - Xsize / 2, 2)) + (pow(event.mouseButton.y - (Ysize / 3), 2)));
+        if (pythagorean <= shape.getRadius()) {
+		//just output to console for now...
+		std::cout << "cookie clicked!\n";
+        }
+}
+
+
 
 int main()
 {
@@ -39,32 +49,29 @@ int main()
 	// for example. If the source rectangle doesn't have the same size as the viewport, its contents will be stretched to fit in.
 	sf::View ourView;
 	// Initialize the view to a rectangle located at (0, 0) and with a size of 800x600 (like the window dimentions
-	ourView.reset(sf::FloatRect(0, 0, 800, 800));
+	ourView.reset(sf::FloatRect(0, 0, 800, 600));
 	// Set its target viewport to be the entire window
 	ourView.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 
 
 
-
 	//Creates a "CircleShape" object in the variable "cookie"
-	sf::CircleShape cookie(200.f, 180);
+	sf::CircleShape cookie(200.f, 360);
 	sf::Texture cookieTxt;
-
     //get the cookie's texture and apply it to the circle
     if (!cookieTxt.loadFromFile("resources/img/cookie.png"))
 	{
 		return EXIT_FAILURE;
 	}
 	cookie.setTexture(&cookieTxt);
-
 	//set circle's center point to (0, 0)
 	cookie.setOrigin(0.f, 0.f);
-
-
 	// set the cookie's position (just a bit higher than the center of screen) and use window.getSize to get the x and y of window
-    // and getRadius to offset where it starts (point 200,200 because thats its radius)
+    // and getRadius to offset where it starts (point 200, 200 because thats its radius)
     // need to add check to ensure that if the window dimensions are too small the cookie doesn't leave the screen accidentally
-    cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
+	cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
+
+
 
 	//Application runs until window is closed
 	while (window.isOpen())
@@ -77,27 +84,31 @@ int main()
 			switch(event.type)
 			{
 				//Closes window
-				case sf::Event::Closed:
+                case sf::Event::Closed:
 					window.close();
-					break;
+				break;
+
+				//if a mouse button is pressed
+                case sf::Event::MouseButtonPressed:
+                	//if the left mouse button is pressed
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+						//check if click is within the bounds of the cookie
+                        clickDetect(event, cookie, window.getSize().x, window.getSize().y);
+                    }
+				break;
+
 			}
-
 		}
-
-		//debug for cookie position & origin
-		std::cout << cookie.getPosition().x << " " << cookie.getRadius()<< "   ";
-		std::cout << cookie.getOrigin().x << " " << cookie.getScale().x << " " << cookie.getScale().y << "\n";
-
 		//Reset the window
 		window.clear();
 
         // Apply the veiwport (ourVeiw)
         window.setView(ourView);
+
 		//Draw the "cookie" we created onto the new veiwport
 		window.draw(cookie);
 
-
-		//Update the display on the screen using ourVeiw
+		//Update the display on the screen using ourVeiw and any other views that may be active
 		window.display();
 	}
 	system("pause");
