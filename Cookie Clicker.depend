@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1510381937 source:c:\users\justin\documents\cookie-clicker\main.cpp
+1510620982 source:c:\users\justin\documents\cookie-clicker\main.cpp
+	<iostream>
 	<math.h>
 	<algorithm>
 	<thread>
