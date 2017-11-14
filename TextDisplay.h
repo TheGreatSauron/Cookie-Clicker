@@ -3,10 +3,9 @@
 
 #include "Object.h"
 #include "SFML/graphics.hpp"
-#include <memory>
 
 //Used for displaying the number of cookies that have been clicked
-class TextDisplay : public Object, public sf::Drawable
+class TextDisplay : public Object, public sf::Drawable, public sf::Transformable
 {
     //Number to be displayed
     int* DisplayNumber;
@@ -18,8 +17,7 @@ class TextDisplay : public Object, public sf::Drawable
 public:
     TextDisplay(sf::Font& Font, sf::Vector2f Position, int& DisplayedNumber);
     virtual void Update(sf::Time DeltaTime);
-    void SetPosition(float x, float y);
-    sf::Vector2f GetPosition();
+    void SetCharacterSize(unsigned NewSize);
 };
 
 #endif // TEXTDISPLAY_H_INCLUDED

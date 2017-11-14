@@ -4,7 +4,7 @@
 //Allows display to be drawn directly
 void TextDisplay::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    states.transform *= Display.getTransform();
+    states.transform *= getTransform();
 
     target.draw(Display, states);
 }
@@ -15,8 +15,9 @@ TextDisplay::TextDisplay(sf::Font& Font, sf::Vector2f Position, int& DisplayedNu
     DisplayNumber = &DisplayedNumber;
 
     Display = sf::Text(sf::String("Error"), Font);
-
     Update(sf::seconds(0));
+
+    setPosition(Position);
 }
 
 //Update the text every frame
@@ -25,12 +26,7 @@ void TextDisplay::Update(sf::Time DeltaTime)
     Display.setString(to_string(*DisplayNumber));
 }
 
-void TextDisplay::SetPosition(float x, float y)
+void TextDisplay::SetCharacterSize(unsigned NewSize)
 {
-    Display.setPosition(x, y);
-}
-
-sf::Vector2f TextDisplay::GetPosition()
-{
-    return Display.getPosition();
+    Display.setCharacterSize(NewSize);
 }
