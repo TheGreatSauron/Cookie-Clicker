@@ -1,11 +1,12 @@
 //Standard C++ Libraries
 #include <iostream>
 #include <math.h>
-#include <algorithm>>
+#include <algorithm>
 #include <thread>
 #include <string>
-#include <cstdio>
 #include <sstream>
+#include <vector>
+#include <memory>
 
 
 //SFML libraries
@@ -14,6 +15,7 @@
 
 //Our headers
 #include "TextDisplay.h"
+#include "Object.h"
 
 int main()
 {
@@ -60,11 +62,16 @@ int main()
         return EXIT_FAILURE;
     }
 
-    //Debugging tool, delete later
+    //Counts number of cookies
     int cookies = 0;
 
-    //Create TextDisplay for the number of cookies
-    TextDisplay CookieDisplay(Arial, sf::Vector2f(0, 0), cookies);
+    //Create vector for all objects that update every frame
+    //This should be all rendered objects that move,
+    //As well as all things that changge dynamically frame to frame
+    std::vector<std::unique_ptr<Object>> Objects;
+
+    //Creates cookie counter aa part of objects
+    Objects.push_back(std::unique_ptr<Object>(new TextDisplay(Arial, sf::Vector2f(0, 0), cookies)));
 
 	//Application runs until window is closed
 	while (window.isOpen())
@@ -84,7 +91,11 @@ int main()
 
 		}
 
-        CookieDisplay.Update(sf::seconds(0));
+        //Update all objects, change 0 seconds to frame clock later
+        for (unsigned i = 0; i < Objects.size(); i++)
+        {
+            Objects[i]->Update(sf::seconds(0));
+        }
 
 		//Reset the window
 		window.clear();
@@ -93,8 +104,15 @@ int main()
         window.setView(ourView);
 		//Draw the "cookie" we created onto the new veiwport
 		window.draw(cookie);
-		//Draw the TextDisplay for the cookie number
-        window.draw(CookieDisplay);
+
+        //Draw all drawable objects
+        for (unsigned i = 0; i < Objects.size(); i++)
+        {
+            if (Objects[i]->IsDrawable)
+            {
+                window.draw(*Objects[i]);
+            }
+        }
 
 		//Update the display on the screen using ourVeiw
 		window.display();

@@ -12,6 +12,8 @@ void TextDisplay::draw(sf::RenderTarget& target, sf::RenderStates states) const
 //Construct the display and set number to be displayed
 TextDisplay::TextDisplay(sf::Font& Font, sf::Vector2f Position, int& DisplayedNumber)
 {
+    IsDrawable = true;
+
     DisplayNumber = &DisplayedNumber;
 
     Display = sf::Text(sf::String("Error"), Font);
