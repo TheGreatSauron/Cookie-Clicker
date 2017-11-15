@@ -27,12 +27,12 @@ std::string to_string(T value){
       return os.str() ;
 }
 
-void clickDetect(sf::Event event, sf::CircleShape shape, float Xsize, float Ysize) {
+bool clickDetect(sf::Event event, sf::CircleShape shape, float Xsize, float Ysize) {
 		//preforms pythagorean therum on the point you choose and see if its inside it or not, it is also offset by the cookies position (y / 3 and x / 2)
 		float pythagorean = sqrt((pow(event.mouseButton.x - Xsize / 2, 2)) + (pow(event.mouseButton.y - (Ysize / 3), 2)));
         if (pythagorean <= shape.getRadius()) {
 		//just output to console for now...
-		std::cout << "cookie clicked!\n";
+		return true;
         }
 }
 
@@ -72,7 +72,7 @@ int main()
 	cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
 
 
-
+    long cookies = 0;
 	//Application runs until window is closed
 	while (window.isOpen())
 	{
@@ -93,12 +93,17 @@ int main()
                 	//if the left mouse button is pressed
                     if (event.mouseButton.button == sf::Mouse::Left) {
 						//check if click is within the bounds of the cookie
-                        clickDetect(event, cookie, window.getSize().x, window.getSize().y);
+                        if (clickDetect(event, cookie, window.getSize().x, window.getSize().y)) {
+                            cookies++;
+                        }
                     }
 				break;
 
 			}
 		}
+
+		sf::String STRcookies = to_string(cookies);
+
 		//Reset the window
 		window.clear();
 
@@ -107,6 +112,7 @@ int main()
 
 		//Draw the "cookie" we created onto the new veiwport
 		window.draw(cookie);
+
 
 		//Update the display on the screen using ourVeiw and any other views that may be active
 		window.display();
