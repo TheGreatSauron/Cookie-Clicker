@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1510865689 source:c:\users\taylorc16\documents\github\cookie-clicker\main.cpp
+1510866246 source:c:\users\taylorc16\documents\github\cookie-clicker\main.cpp
 	<iostream>
 	<math.h>
 	<algorithm>
@@ -511,7 +511,7 @@
 1510782636 c:\users\taylorc16\documents\github\cookie-clicker\object.h
 	"SFML/graphics.hpp"
 
-1510782636 source:c:\users\taylorc16\documents\github\cookie-clicker\textdisplay.cpp
+1510866233 source:c:\users\taylorc16\documents\github\cookie-clicker\textdisplay.cpp
 	"TextDisplay.h"
 	"to_string.h"
 

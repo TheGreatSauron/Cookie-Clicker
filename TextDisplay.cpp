@@ -26,6 +26,8 @@ TextDisplay::TextDisplay(sf::Font& Font, sf::Vector2f Position, int& DisplayedNu
 void TextDisplay::Update(sf::Time DeltaTime)
 {
     Display.setString(to_string(*DisplayNumber));
+
+    Display.setOrigin(Display.getLocalBounds().width / 2, Display.getLocalBounds().height / 2);
 }
 
 void TextDisplay::SetCharacterSize(unsigned NewSize)

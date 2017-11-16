@@ -71,7 +71,7 @@ int main()
     std::vector<std::unique_ptr<Object>> Objects;
 
     //Creates cookie counter aa part of objects
-    Objects.push_back(std::unique_ptr<Object>(new TextDisplay(Arial, sf::Vector2f(0, 0), cookies)));
+    Objects.push_back(std::unique_ptr<Object>(new TextDisplay(Arial, sf::Vector2f(100, 100), cookies)));
 
     //Start game clock to handle updates
     sf::Clock FrameClock;
