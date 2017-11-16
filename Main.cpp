@@ -4,30 +4,18 @@
 #include <algorithm>
 #include <thread>
 #include <string>
-#include <cstdio>
 #include <sstream>
 
 
 //SFML libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
 
+//Our headers
+#include "TextDisplay.h"
 
-//enable the "to_string" function of std:: as code-blocks has bugs with it not working correctly
-template <typename T>
-std::string to_string(T value){
-      //create an output string stream
-      std::ostringstream os ;
-      //throw the value into the string stream
-      os << value ;
-      //convert the string stream into a string and return
-      return os.str() ;
-}
-
-bool clickDetect(sf::Event event, sf::CircleShape shape, float Xsize, float Ysize) {
+//stands for cookieClickDetect
+bool cClickDetect(sf::Event event, sf::CircleShape shape, float Xsize, float Ysize) {
 		//preforms pythagorean therum on the point you choose and see if its inside it or not, it is also offset by the cookies position (y / 3 and x / 2)
 		float pythagorean = sqrt((pow(event.mouseButton.x - Xsize / 2, 2)) + (pow(event.mouseButton.y - (Ysize / 3), 2)));
         if (pythagorean <= shape.getRadius()) {
@@ -35,8 +23,6 @@ bool clickDetect(sf::Event event, sf::CircleShape shape, float Xsize, float Ysiz
 		return true;
         }
 }
-
-
 
 int main()
 {
@@ -55,24 +41,40 @@ int main()
 
 
 
+
 	//Creates a "CircleShape" object in the variable "cookie"
-	sf::CircleShape cookie(200.f, 360);
+	sf::CircleShape cookie(200.f, 180);
 	sf::Texture cookieTxt;
+
     //get the cookie's texture and apply it to the circle
     if (!cookieTxt.loadFromFile("resources/img/cookie.png"))
 	{
 		return EXIT_FAILURE;
 	}
 	cookie.setTexture(&cookieTxt);
+
 	//set circle's center point to (0, 0)
 	cookie.setOrigin(0.f, 0.f);
+
+
 	// set the cookie's position (just a bit higher than the center of screen) and use window.getSize to get the x and y of window
-    // and getRadius to offset where it starts (point 200, 200 because thats its radius)
+    // and getRadius to offset where it starts (point 200,200 because thats its radius)
     // need to add check to ensure that if the window dimensions are too small the cookie doesn't leave the screen accidentally
-	cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
+    cookie.setPosition((window.getSize().x / 2.f) - cookie.getRadius(), (window.getSize().y / 3.f) - cookie.getRadius());
 
+    //Create arial font
+    sf::Font Arial;
+    if (!Arial.loadFromFile("resources/font/arial.ttf"))
+    {
+        return EXIT_FAILURE;
+    }
 
-    long cookies = 0;
+    //set cookies to 0
+    int cookies = 0;
+
+    //Create TextDisplay for the number of cookies
+    TextDisplay CookieDisplay(Arial, sf::Vector2f(window.getSize().x / 2.f, window.getSize().y * (2.f/3.f)), cookies);
+
 	//Application runs until window is closed
 	while (window.isOpen())
 	{
@@ -84,37 +86,37 @@ int main()
 			switch(event.type)
 			{
 				//Closes window
-                case sf::Event::Closed:
+				case sf::Event::Closed:
 					window.close();
-				break;
+					break;
 
-				//if a mouse button is pressed
+					//if a mouse button is pressed
                 case sf::Event::MouseButtonPressed:
                 	//if the left mouse button is pressed
                     if (event.mouseButton.button == sf::Mouse::Left) {
 						//check if click is within the bounds of the cookie
-                        if (clickDetect(event, cookie, window.getSize().x, window.getSize().y)) {
+                        if (cClickDetect(event, cookie, window.getSize().x, window.getSize().y)) {
                             cookies++;
                         }
                     }
 				break;
-
 			}
+
 		}
 
-		sf::String STRcookies = to_string(cookies);
+        CookieDisplay.Update(sf::seconds(0));
 
 		//Reset the window
 		window.clear();
 
         // Apply the veiwport (ourVeiw)
         window.setView(ourView);
-
 		//Draw the "cookie" we created onto the new veiwport
 		window.draw(cookie);
+		//Draw the TextDisplay for the cookie number
+        window.draw(CookieDisplay);
 
-
-		//Update the display on the screen using ourVeiw and any other views that may be active
+		//Update the display on the screen using ourVeiw
 		window.display();
 	}
 	system("pause");
