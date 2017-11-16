@@ -73,6 +73,9 @@ int main()
     //Creates cookie counter aa part of objects
     Objects.push_back(std::unique_ptr<Object>(new TextDisplay(Arial, sf::Vector2f(0, 0), cookies)));
 
+    //Start game clock to handle updates
+    sf::Clock FrameClock;
+
 	//Application runs until window is closed
 	while (window.isOpen())
 	{
@@ -91,10 +94,11 @@ int main()
 
 		}
 
-        //Update all objects, change 0 seconds to frame clock later
+        //Update all objects with frame time
+        sf::Time DeltaTime(FrameClock.restart());
         for (unsigned i = 0; i < Objects.size(); i++)
         {
-            Objects[i]->Update(sf::seconds(0));
+            Objects[i]->Update(DeltaTime);
         }
 
 		//Reset the window
