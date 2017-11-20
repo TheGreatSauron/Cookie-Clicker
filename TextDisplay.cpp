@@ -30,6 +30,7 @@ void TextDisplay::Update(sf::Time DeltaTime)
     Display.setOrigin(Display.getLocalBounds().width / 2, Display.getLocalBounds().height / 2);
 }
 
+//Sets character size
 void TextDisplay::SetCharacterSize(unsigned NewSize)
 {
     Display.setCharacterSize(NewSize);

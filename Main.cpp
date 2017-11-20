@@ -20,7 +20,7 @@
 int main()
 {
 	//Creates game window
-	sf::RenderWindow window(sf::VideoMode(800, 600, 32), "Cookie Clicker");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Cookie Clicker");
 
 
 	// Create our own view (basically allows for resizing of window to only be perspective based)
@@ -33,8 +33,6 @@ int main()
 	ourView.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 
 
-
-
 	//Creates a "CircleShape" object in the variable "cookie"
 	sf::CircleShape cookie(200.f, 180);
 	sf::Texture cookieTxt;
@@ -45,6 +43,7 @@ int main()
 		return EXIT_FAILURE;
 	}
 	cookie.setTexture(&cookieTxt);
+
 
 	//set circle's center point to (0, 0)
 	cookie.setOrigin(0.f, 0.f);
@@ -95,10 +94,10 @@ int main()
 		}
 
         //Update all objects with frame time
-        sf::Time DeltaTime(FrameClock.restart());
-        for (unsigned i = 0; i < Objects.size(); i++)
+        sf::Time DeltaTime = FrameClock.restart();
+        for (std::unique_ptr<Object>& CurrentObject : Objects)
         {
-            Objects[i]->Update(DeltaTime);
+            CurrentObject->Update(DeltaTime);
         }
 
 		//Reset the window
@@ -110,11 +109,11 @@ int main()
 		window.draw(cookie);
 
         //Draw all drawable objects
-        for (unsigned i = 0; i < Objects.size(); i++)
+        for (std::unique_ptr<Object>& CurrentObject : Objects)
         {
-            if (Objects[i]->IsDrawable)
+            if (CurrentObject->IsDrawable)
             {
-                window.draw(*Objects[i]);
+                window.draw(*CurrentObject);
             }
         }
 
