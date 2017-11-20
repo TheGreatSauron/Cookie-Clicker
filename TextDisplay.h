@@ -5,7 +5,7 @@
 #include "SFML/graphics.hpp"
 
 //Used for displaying the number of cookies that have been clicked
-class TextDisplay : public Object, public sf::Drawable, public sf::Transformable
+class TextDisplay : public Object
 {
     //Number to be displayed
     int* DisplayNumber;

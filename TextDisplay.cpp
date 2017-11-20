@@ -12,6 +12,8 @@ void TextDisplay::draw(sf::RenderTarget& target, sf::RenderStates states) const
 //Construct the display and set number to be displayed
 TextDisplay::TextDisplay(sf::Font& Font, sf::Vector2f Position, int& DisplayedNumber)
 {
+    IsDrawable = true;
+
     DisplayNumber = &DisplayedNumber;
 
     Display = sf::Text(sf::String("Error"), Font);
@@ -24,8 +26,11 @@ TextDisplay::TextDisplay(sf::Font& Font, sf::Vector2f Position, int& DisplayedNu
 void TextDisplay::Update(sf::Time DeltaTime)
 {
     Display.setString(to_string(*DisplayNumber));
+
+    Display.setOrigin(Display.getLocalBounds().width / 2, Display.getLocalBounds().height / 2);
 }
 
+//Sets character size
 void TextDisplay::SetCharacterSize(unsigned NewSize)
 {
     Display.setCharacterSize(NewSize);
